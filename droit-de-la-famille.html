@@ -112,6 +112,8 @@
     font-weight: 500;
   }
 
+  .logo-img { height: 46px; width: auto; display: block; }
+
   .wordmark span { color: var(--gold-2); font-style: italic; font-weight: 400; }
 
   nav { display: flex; align-items: center; gap: 42px; }
@@ -822,6 +824,41 @@
     .lang-switch { margin-right: 10px; }
   }
 
+  /* ============ MOBILE UX ENHANCEMENTS (mobile only, desktop untouched) ============ */
+
+  @media (max-width: 900px) {
+    section { padding: 90px 0; }
+    .head-center { margin-bottom: 50px; }
+    .cta-strip { padding: 70px 0; }
+
+    .hero { min-height: 100svh; }
+    .hero-stats { margin-top: 50px; gap: 40px; }
+
+    .hero-buttons { flex-direction: column; width: 100%; gap: 14px; }
+    .hero-buttons .btn-gold,
+    .hero-buttons .btn-line { width: 100%; text-align: center; }
+
+    .practice-card { padding: 40px 28px; }
+    .practice-card .roman { margin-bottom: 24px; }
+
+    .lang-switch button { padding: 9px 12px; }
+
+    .quote-dots button { position: relative; }
+    .quote-dots button::after { content: ""; position: absolute; inset: -12px; }
+
+    .contact-line a { display: inline-block; padding: 4px 0; }
+  }
+
+  @media (max-width: 560px) {
+    .contact-line { flex-direction: column; align-items: flex-start; gap: 6px; }
+  }
+
+  @media (max-width: 480px) {
+    header, header.scrolled { padding-left: 6vw; padding-right: 6vw; }
+    .logo-img { height: 34px; }
+    .lang-switch button { padding: 7px 9px; }
+    .hero h1 { font-size: clamp(38px, 11vw, 48px); }
+  }
   /* ============ ARABIC / RTL ADAPTATIONS ============ */
 
   html[dir="rtl"] body {
@@ -894,7 +931,7 @@
 <body>
 
 <header id="header">
-  <a href="index.html" class="wordmark"><img src="logo-header-transparent.png" alt="El Hossaini — Avocat à Tétouan" style="height:46px; width:auto; display:block;"></a>
+  <a href="index.html" class="wordmark"><img src="logo-header-transparent.png" alt="El Hossaini — Avocat à Tétouan" class="logo-img"></a>
 
   <nav>
     <a href="index.html#etude" data-fr="L'étude" data-ar="نبذة عنا">L'étude</a>
