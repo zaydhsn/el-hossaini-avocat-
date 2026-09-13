@@ -151,37 +151,72 @@
   .nav-toggle {
     display: none;
     flex-direction: column;
+    justify-content: center;
     gap: 5px;
     background: none;
     border: none;
     cursor: pointer;
+    padding: 12px;
+    margin: -12px;
   }
 
-  .nav-toggle span { width: 22px; height: 1px; background: var(--gold-2); }
+  .nav-toggle span {
+    width: 22px; height: 1px; background: var(--gold-2);
+    transition: transform .3s ease, opacity .3s ease;
+  }
+
+  .nav-toggle.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2) { opacity: 0; }
+  .nav-toggle.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
   @media (max-width: 900px) {
     nav, .rdv { display: none; }
     .nav-toggle { display: flex; }
   }
 
+  body.menu-open { overflow: hidden; }
+  body.menu-open header { z-index: 501; }
+
   .mobile-panel {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: fixed;
-    top: 72px; left: 0; right: 0;
-    background: var(--black-2);
-    border-bottom: 1px solid var(--line);
-    z-index: 99;
-    padding: 10px 6vw 26px;
+    inset: 0;
+    background: rgba(7,19,31,.98);
+    backdrop-filter: blur(16px);
+    z-index: 500;
+    padding: 8vw;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-14px);
+    transition: opacity .35s ease, transform .35s ease, visibility 0s linear .35s;
   }
 
-  .mobile-panel.open { display: block; }
-  .mobile-panel a {
-    display: block;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    font-size: 14px;
-    color: var(--text-soft);
+  .mobile-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity .35s ease, transform .35s ease, visibility 0s linear 0s;
   }
+
+  .mobile-panel .ornament { justify-content: center; margin-bottom: 36px; }
+
+  .mobile-panel a:not(.btn-gold) {
+    display: block;
+    padding: 16px 0;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: #f3efe6;
+    transition: color .25s ease;
+  }
+
+  .mobile-panel a:not(.btn-gold):hover, .mobile-panel a:not(.btn-gold):active { color: var(--gold-1); }
+
+  .mobile-panel .btn-gold { margin-top: 30px; }
 
   /* HERO */
 
@@ -310,6 +345,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
     font-size: clamp(34px, 4.6vw, 54px);
+    line-height: 1.15;
     margin-top: 18px;
   }
 
@@ -347,6 +383,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
     font-size: clamp(30px, 3.6vw, 46px);
+    line-height: 1.15;
     margin-bottom: 26px;
   }
 
@@ -409,6 +446,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
     font-size: 25px;
+    line-height: 1.2;
     margin-bottom: 16px;
   }
 
@@ -515,6 +553,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
     font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.15;
   }
 
   .cta-strip h2 em { font-style: italic; }
@@ -731,6 +770,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
     font-size: 22px;
+    line-height: 1.2;
     margin-bottom: 12px;
   }
 
@@ -870,7 +910,7 @@
     <button type="button" data-lang="ar">العربية</button>
   </div>
 
-  <a href="index.html#contact" class="rdv" data-fr="Prendre rendez-vous" data-ar="احجز موعداً">Prendre rendez-vous</a>
+  <a href="index.html#contact" class="rdv" data-fr="Prendre rendez-vous" data-ar="احجز موعدا">Prendre rendez-vous</a>
 
   <button class="nav-toggle" id="navToggle" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -878,11 +918,13 @@
 </header>
 
 <div class="mobile-panel" id="mobilePanel">
+  <div class="ornament"><span class="l"></span><span class="dot"></span><span class="r"></span></div>
   <a href="index.html#etude" data-fr="L'étude" data-ar="نبذة عنا">L'étude</a>
   <a href="index.html#domaines" data-fr="Domaines" data-ar="التخصصات">Domaines</a>
   <a href="index.html#avis" data-fr="Avis" data-ar="الآراء">Avis</a>
   <a href="index.html#faq" data-fr="Questions" data-ar="الأسئلة">Questions</a>
   <a href="index.html#contact" data-fr="Contact" data-ar="اتصل بنا">Contact</a>
+  <a href="index.html#contact" class="btn-gold" data-fr="Prendre rendez-vous" data-ar="احجز موعدا">Prendre rendez-vous</a>
 </div>
 
 <main>
@@ -903,13 +945,13 @@
     <p style="color:var(--text-soft); font-size:15.5px; margin-bottom:34px;" data-fr="Dans le cadre du formulaire de contact, les données suivantes peuvent être collectées : nom complet, numéro de téléphone, adresse email et description de votre situation." data-ar="في إطار استمارة التواصل، يمكن جمع المعطيات التالية: الاسم الكامل، رقم الهاتف، البريد الإلكتروني، ووصف وضعيتكم.">Dans le cadre du formulaire de contact, les données suivantes peuvent être collectées : nom complet, numéro de téléphone, adresse email et description de votre situation.</p>
 
     <h3 class="serif" style="color:var(--gold-1); font-size:20px; margin-bottom:14px;" data-fr="Finalité du traitement" data-ar="الغرض من المعالجة">Finalité du traitement</h3>
-    <p style="color:var(--text-soft); font-size:15.5px; margin-bottom:34px;" data-fr="Ces données sont utilisées exclusivement pour répondre à votre demande de renseignement ou de rendez-vous. Elles ne sont ni cédées ni transmises à des tiers." data-ar="تُستعمل هذه المعطيات حصرياً للرد على طلبكم للمعلومات أو للحصول على موعد، ولا تُشارَك أو تُنقَل إلى أي طرف ثالث.">Ces données sont utilisées exclusivement pour répondre à votre demande de renseignement ou de rendez-vous. Elles ne sont ni cédées ni transmises à des tiers.</p>
+    <p style="color:var(--text-soft); font-size:15.5px; margin-bottom:34px;" data-fr="Ces données sont utilisées exclusivement pour répondre à votre demande de renseignement ou de rendez-vous. Elles ne sont ni cédées ni transmises à des tiers." data-ar="تستعمل هذه المعطيات حصريا للرد على طلبكم للمعلومات أو للحصول على موعد، ولا تشارك أو تنقل إلى أي طرف ثالث.">Ces données sont utilisées exclusivement pour répondre à votre demande de renseignement ou de rendez-vous. Elles ne sont ni cédées ni transmises à des tiers.</p>
 
     <h3 class="serif" style="color:var(--gold-1); font-size:20px; margin-bottom:14px;" data-fr="Durée de conservation" data-ar="مدة الاحتفاظ">Durée de conservation</h3>
-    <p style="color:var(--text-soft); font-size:15.5px; margin-bottom:34px;" data-fr="Les données sont conservées pendant la durée nécessaire au traitement de votre demande, puis supprimées ou archivées conformément aux obligations légales applicables à la profession d'avocat." data-ar="يُحتفظ بالمعطيات طيلة المدة اللازمة لمعالجة طلبكم، ثم تُحذف أو تُؤرشف وفقاً للالتزامات القانونية المطبقة على مهنة المحاماة.">Les données sont conservées pendant la durée nécessaire au traitement de votre demande, puis supprimées ou archivées conformément aux obligations légales applicables à la profession d'avocat.</p>
+    <p style="color:var(--text-soft); font-size:15.5px; margin-bottom:34px;" data-fr="Les données sont conservées pendant la durée nécessaire au traitement de votre demande, puis supprimées ou archivées conformément aux obligations légales applicables à la profession d'avocat." data-ar="يحتفظ بالمعطيات طيلة المدة اللازمة لمعالجة طلبكم، ثم تحذف أو تؤرشف وفقا للالتزامات القانونية المطبقة على مهنة المحاماة.">Les données sont conservées pendant la durée nécessaire au traitement de votre demande, puis supprimées ou archivées conformément aux obligations légales applicables à la profession d'avocat.</p>
 
     <h3 class="serif" style="color:var(--gold-1); font-size:20px; margin-bottom:14px;" data-fr="Vos droits" data-ar="حقوقكم">Vos droits</h3>
-    <p style="color:var(--text-soft); font-size:15.5px;" data-fr="Conformément à la législation applicable en matière de protection des données personnelles, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour l'exercer, contactez le cabinet à l'adresse contact@cabinet.ma." data-ar="طبقاً للتشريع الساري المتعلق بحماية المعطيات الشخصية، يحق لكم الاطلاع على معطياتكم وتصحيحها وحذفها. ولممارسة هذا الحق، يرجى التواصل مع المكتب عبر البريد الإلكتروني: contact@cabinet.ma.">Conformément à la législation applicable en matière de protection des données personnelles, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour l'exercer, contactez le cabinet à l'adresse contact@cabinet.ma.</p>
+    <p style="color:var(--text-soft); font-size:15.5px;" data-fr="Conformément à la législation applicable en matière de protection des données personnelles, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour l'exercer, contactez le cabinet à l'adresse contact@cabinet.ma." data-ar="طبقا للتشريع الساري المتعلق بحماية المعطيات الشخصية، يحق لكم الاطلاع على معطياتكم وتصحيحها وحذفها. ولممارسة هذا الحق، يرجى التواصل مع المكتب عبر البريد الإلكتروني: contact@cabinet.ma.">Conformément à la législation applicable en matière de protection des données personnelles, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour l'exercer, contactez le cabinet à l'adresse contact@cabinet.ma.</p>
   </div>
 </section>
 
@@ -930,7 +972,7 @@
 </a>
 
 <div class="mobile-cta-bar">
-  <a href="index.html#contact" class="btn-gold" data-fr="Prendre rendez-vous" data-ar="احجز موعداً">Prendre rendez-vous</a>
+  <a href="index.html#contact" class="btn-gold" data-fr="Prendre rendez-vous" data-ar="احجز موعدا">Prendre rendez-vous</a>
 </div>
 
 <script>
@@ -941,9 +983,15 @@
 
   const navToggle = document.getElementById('navToggle');
   const mobilePanel = document.getElementById('mobilePanel');
-  navToggle.addEventListener('click', () => mobilePanel.classList.toggle('open'));
+  function toggleMobileMenu(open) {
+    const isOpen = open !== undefined ? open : !mobilePanel.classList.contains('open');
+    mobilePanel.classList.toggle('open', isOpen);
+    navToggle.classList.toggle('active', isOpen);
+    document.body.classList.toggle('menu-open', isOpen);
+  }
+  navToggle.addEventListener('click', () => toggleMobileMenu());
   mobilePanel.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => mobilePanel.classList.remove('open'))
+    a.addEventListener('click', () => toggleMobileMenu(false))
   );
 </script>
 
@@ -955,8 +1003,8 @@
       description: "Politique de confidentialité du Cabinet El Hossaini, avocat à Tétouan."
     },
     ar: {
-      title: 'سياسة الخصوصية — الحسيني، محامٍ بتطوان',
-      description: 'سياسة الخصوصية لمكتب الحسيني، محامٍ بتطوان.'
+      title: 'سياسة الخصوصية — الحسيني، محامي بتطوان',
+      description: 'سياسة الخصوصية لمكتب الحسيني، محامي بتطوان.'
     }
   };
 

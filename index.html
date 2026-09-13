@@ -160,31 +160,63 @@
     margin: -12px;
   }
 
-  .nav-toggle span { width: 22px; height: 1px; background: var(--gold-2); }
+  .nav-toggle span {
+    width: 22px; height: 1px; background: var(--gold-2);
+    transition: transform .3s ease, opacity .3s ease;
+  }
+
+  .nav-toggle.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2) { opacity: 0; }
+  .nav-toggle.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
   @media (max-width: 900px) {
     nav, .rdv { display: none; }
     .nav-toggle { display: flex; }
   }
 
+  body.menu-open { overflow: hidden; }
+  body.menu-open header { z-index: 501; }
+
   .mobile-panel {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: fixed;
-    top: 72px; left: 0; right: 0;
-    background: var(--black-2);
-    border-bottom: 1px solid var(--line);
-    z-index: 99;
-    padding: 10px 6vw 26px;
+    inset: 0;
+    background: rgba(7,19,31,.98);
+    backdrop-filter: blur(16px);
+    z-index: 500;
+    padding: 8vw;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-14px);
+    transition: opacity .35s ease, transform .35s ease, visibility 0s linear .35s;
   }
 
-  .mobile-panel.open { display: block; }
-  .mobile-panel a {
-    display: block;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    font-size: 14px;
-    color: var(--text-soft);
+  .mobile-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity .35s ease, transform .35s ease, visibility 0s linear 0s;
   }
+
+  .mobile-panel .ornament { justify-content: center; margin-bottom: 36px; }
+
+  .mobile-panel a:not(.btn-gold) {
+    display: block;
+    padding: 16px 0;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: #f3efe6;
+    transition: color .25s ease;
+  }
+
+  .mobile-panel a:not(.btn-gold):hover, .mobile-panel a:not(.btn-gold):active { color: var(--gold-1); }
+
+  .mobile-panel .btn-gold { margin-top: 30px; }
 
   /* HERO */
 
@@ -878,7 +910,7 @@
     <button type="button" data-lang="ar">العربية</button>
   </div>
 
-  <a href="#contact" class="rdv" data-fr="Prendre rendez-vous" data-ar="احجز موعداً">Prendre rendez-vous</a>
+  <a href="#contact" class="rdv" data-fr="Prendre rendez-vous" data-ar="احجز موعدا">Prendre rendez-vous</a>
 
   <button class="nav-toggle" id="navToggle" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -886,11 +918,13 @@
 </header>
 
 <div class="mobile-panel" id="mobilePanel">
+  <div class="ornament"><span class="l"></span><span class="dot"></span><span class="r"></span></div>
   <a href="#etude" data-fr="L'étude" data-ar="نبذة عنا">L'étude</a>
   <a href="#domaines" data-fr="Domaines" data-ar="التخصصات">Domaines</a>
   <a href="#avis" data-fr="Avis" data-ar="الآراء">Avis</a>
   <a href="#faq" data-fr="Questions" data-ar="الأسئلة">Questions</a>
   <a href="#contact" data-fr="Contact" data-ar="اتصل بنا">Contact</a>
+  <a href="#contact" class="btn-gold" data-fr="Prendre rendez-vous" data-ar="احجز موعدا">Prendre rendez-vous</a>
 </div>
 
 <main>
@@ -900,13 +934,13 @@
     <div class="hero-inner">
       <div class="ornament"><span class="l"></span><span class="dot"></span><span class="r"></span></div>
       <p class="kicker" style="margin-bottom:26px;" data-fr="Cabinet d'avocat · Tétouan" data-ar="مكتب محاماة · تطوان">Cabinet d'avocat · Tétouan</p>
-      <h1 data-fr-html='Le droit, plaidé avec <em class="gold-text">exigence</em>' data-ar-html='دفاعٌ قانونيٌّ بـ<em class="gold-text">التزام</em> واحتراف'>Le droit, plaidé avec <em class="gold-text">exigence</em></h1>
+      <h1 data-fr-html='Le droit, plaidé avec <em class="gold-text">exigence</em>' data-ar-html='دفاع قانوني بـ<em class="gold-text">التزام</em> واحتراف'>Le droit, plaidé avec <em class="gold-text">exigence</em></h1>
       <p class="hero-desc" data-fr="Conseil et défense pour particuliers et entreprises, en français, en arabe et en darija." data-ar="استشارات ودفاع قانوني للأفراد والشركات، باللغات الفرنسية والعربية والدارجة.">
         Conseil et défense pour particuliers et entreprises,
         en français, en arabe et en darija.
       </p>
       <div class="hero-buttons">
-        <a href="#contact" class="btn-gold" data-fr="Prendre rendez-vous" data-ar="احجز موعداً">Prendre rendez-vous</a>
+        <a href="#contact" class="btn-gold" data-fr="Prendre rendez-vous" data-ar="احجز موعدا">Prendre rendez-vous</a>
         <a href="#domaines" class="btn-line" data-fr="Nos domaines" data-ar="تخصصاتنا">Nos domaines</a>
       </div>
       <div class="hero-stats">
@@ -918,11 +952,11 @@
   </section>
 
   <!-- NOTRE ENGAGEMENT -->
-  <section class="rail divider">
+  <section class="rail divider" style="padding: 90px 0 50px;">
     <div class="head-center" style="margin-bottom:0;">
       <div class="ornament"><span class="l"></span><span class="dot"></span><span class="r"></span></div>
       <p class="kicker" data-fr="Notre engagement" data-ar="التزامنا">Notre engagement</p>
-      <h2 data-fr-html='Une défense fondée sur la <em class="gold-text">rigueur</em>, la <em class="gold-text">discrétion</em> et la <em class="gold-text">confiance</em>.' data-ar-html='دفاعٌ قائم على <em class="gold-text">الدقة</em>، و<em class="gold-text">الكتمان</em>، و<em class="gold-text">الثقة</em>.'>Une défense fondée sur la rigueur, la discrétion et la confiance.</h2>
+      <h2 data-fr-html='Une défense fondée sur la <em class="gold-text">rigueur</em>, la <em class="gold-text">discrétion</em> et la <em class="gold-text">confiance</em>.' data-ar-html='دفاع قائم على <em class="gold-text">الدقة</em>، و<em class="gold-text">الكتمان</em>، و<em class="gold-text">الثقة</em>.'>Une défense fondée sur la rigueur, la discrétion et la confiance.</h2>
     </div>
   </section>
 
@@ -936,7 +970,7 @@
       </div>
       <div class="about-copy">
         <p class="kicker" data-fr="L'étude" data-ar="نبذة عنا">L'étude</p>
-        <p class="serif" style="font-size:21px; font-weight:500; color:var(--gold-1); margin-bottom:22px;" data-fr="Abdelmajid El Hossaini — Avocat au Barreau de Tétouan" data-ar="عبد المجيد الحسيني — محامٍ بهيئة تطوان">Abdelmajid El Hossaini — Avocat au Barreau de Tétouan</p>
+        <p class="serif" style="font-size:21px; font-weight:500; color:var(--gold-1); margin-bottom:22px;" data-fr="Abdelmajid El Hossaini — Avocat au Barreau de Tétouan" data-ar="عبد المجيد الحسيني — محامي بهيئة تطوان">Abdelmajid El Hossaini — Avocat au Barreau de Tétouan</p>
         <h2 data-fr-html='Une pratique fondée sur <em class="gold-text">l&#39;exigence</em> et le résultat.' data-ar-html='ممارسة قائمة على <em class="gold-text">الدقة</em> والنتائج الملموسة.'>Une pratique fondée sur <em class="gold-text">l'exigence</em> et le résultat.</h2>
         <p data-fr="Le Cabinet El Hossaini accompagne particuliers, entrepreneurs et entreprises dans leurs problématiques juridiques, à Tétouan et dans le nord du Maroc. Inscrit au Barreau depuis plus de dix ans, Maître El Hossaini intervient avec la même rigueur, quelle que soit la taille du dossier." data-ar="يرافق مكتب الحسيني الأفراد ورجال الأعمال والشركات في قضاياهم القانونية، بمدينة تطوان وشمال المغرب. وهو مسجل بهيئة المحامين منذ أكثر من عشر سنوات، ويتعامل الأستاذ الحسيني مع كل ملف بنفس الدقة، مهما كان حجمه.">
           Le Cabinet El Hossaini accompagne particuliers, entrepreneurs et
@@ -945,7 +979,7 @@
           El Hossaini intervient avec la même rigueur, quelle que soit la
           taille du dossier.
         </p>
-        <p data-fr="Une écoute attentive, une explication claire du droit applicable, et une défense déterminée devant les juridictions compétentes." data-ar="إنصاتٌ دقيق لظروف كل قضية، وشرحٌ واضح للقانون المطبَّق، ودفاعٌ حازم أمام المحاكم المختصة.">
+        <p data-fr="Une écoute attentive, une explication claire du droit applicable, et une défense déterminée devant les juridictions compétentes." data-ar="إنصات دقيق لظروف كل قضية، وشرح واضح للقانون المطبق، ودفاع حازم أمام المحاكم المختصة.">
           Une écoute attentive, une explication claire du droit applicable,
           et une défense déterminée devant les juridictions compétentes.
         </p>
@@ -954,7 +988,7 @@
           <span data-fr="Droit des affaires" data-ar="القانون التجاري">Droit des affaires</span>
           <span data-fr="Droit de la famille" data-ar="قانون الأسرة">Droit de la famille</span>
           <span data-fr="FR · AR · Darija" data-ar="الفرنسية · العربية · الدارجة">FR · AR · Darija</span>
-          <span data-fr="Ancien rapporteur — Fédération des Associations des Jeunes Avocats du Maroc" data-ar="مقرر فدرالية جمعيات المحامين الشباب بالمغرب سابقاً">Ancien rapporteur — Fédération des Associations des Jeunes Avocats du Maroc</span>
+          <span data-fr="Ancien rapporteur — Fédération des Associations des Jeunes Avocats du Maroc" data-ar="مقرر فدرالية جمعيات المحامين الشباب بالمغرب سابقا">Ancien rapporteur — Fédération des Associations des Jeunes Avocats du Maroc</span>
         </div>
       </div>
     </div>
@@ -1019,12 +1053,12 @@
       <div class="why-item">
         <span class="roman">IV</span>
         <h3 data-fr="Confidentialité absolue" data-ar="سرية تامة">Confidentialité absolue</h3>
-        <p data-fr="Chaque dossier est traité avec la plus stricte confidentialité, du premier échange jusqu'à la clôture de l'affaire." data-ar="تُعالَج كل قضية بسرية تامة، من أول تواصل إلى غاية إغلاق الملف.">Chaque dossier est traité avec la plus stricte confidentialité, du premier échange jusqu'à la clôture de l'affaire.</p>
+        <p data-fr="Chaque dossier est traité avec la plus stricte confidentialité, du premier échange jusqu'à la clôture de l'affaire." data-ar="نتعامل مع كل قضية بسرية تامة، من أول تواصل إلى غاية إغلاق الملف.">Chaque dossier est traité avec la plus stricte confidentialité, du premier échange jusqu'à la clôture de l'affaire.</p>
       </div>
       <div class="why-item">
         <span class="roman">V</span>
         <h3 data-fr="Écoute personnalisée" data-ar="إنصات شخصي">Écoute personnalisée</h3>
-        <p data-fr="Chaque situation est unique : une attention réelle est portée à votre contexte avant toute recommandation." data-ar="كل وضعية فريدة من نوعها: نولي اهتماماً حقيقياً لظروفكم قبل تقديم أي توصية.">Chaque situation est unique : une attention réelle est portée à votre contexte avant toute recommandation.</p>
+        <p data-fr="Chaque situation est unique : une attention réelle est portée à votre contexte avant toute recommandation." data-ar="كل وضعية فريدة من نوعها: نولي اهتماما حقيقيا لظروفكم قبل تقديم أي توصية.">Chaque situation est unique : une attention réelle est portée à votre contexte avant toute recommandation.</p>
       </div>
       <div class="why-item">
         <span class="roman">VI</span>
@@ -1040,16 +1074,16 @@
       <div class="ornament" style="justify-content:center; margin-bottom:50px;"><span class="l"></span><span class="dot"></span><span class="r"></span></div>
 
       <div class="quote-slide active">
-        <p class="q" data-fr="« Un accompagnement sérieux et rassurant du début à la fin de mon dossier immobilier. »" data-ar="«مرافقة جادة ومطمئنة من بداية ملفي العقاري إلى نهايته.»">« Un accompagnement sérieux et rassurant du début à la fin de mon dossier immobilier. »</p>
-        <p class="attrib" data-fr="Yassine B. — Droit immobilier" data-ar="ياسين ب. — قانون عقاري">Yassine B. — Droit immobilier</p>
+        <p class="q" data-fr="« J'ai contacté Maître El Hossaini pour un problème qui me préoccupait beaucoup. Il a pris le temps de m'expliquer la situation clairement et surtout de me dire ce qui était possible et ce qui ne l'était pas. Très bonne communication. »" data-ar="«تواصلت مع الأستاذ الحسيني بخصوص مشكلة كانت تقلقني كثيرا. خصص لي الوقت الكافي ليشرح لي الوضعية بوضوح، وأخبرني بصراحة بما هو ممكن وما هو غير ممكن. تواصل ممتاز.»">« J'ai contacté Maître El Hossaini pour un problème qui me préoccupait beaucoup. Il a pris le temps de m'expliquer la situation clairement et surtout de me dire ce qui était possible et ce qui ne l'était pas. Très bonne communication. »</p>
+        <p class="attrib" data-fr="Inaam El Meslouhi — Droit immobilier" data-ar="إنعام المصلوحي — قانون عقاري">Inaam El Meslouhi — Droit immobilier</p>
       </div>
       <div class="quote-slide">
-        <p class="q" data-fr="« Réactivité et écoute exemplaires. Une défense menée avec beaucoup de professionnalisme. »" data-ar="«تجاوب وإنصات مثاليان. دفاعٌ تم بمهنية عالية.»">« Réactivité et écoute exemplaires. Une défense menée avec beaucoup de professionnalisme. »</p>
-        <p class="attrib" data-fr="Salma R. — Droit de la famille" data-ar="سلمى ر. — قانون الأسرة">Salma R. — Droit de la famille</p>
+        <p class="q" data-fr="« Ce que j'ai apprécié, c'est qu'il ne donne pas de fausses promesses. Il explique les choses telles qu'elles sont et il suit le dossier sérieusement. À chaque fois que j'avais une question, j'avais une réponse. »" data-ar="«ما أعجبني هو أنه لا يعطي وعودا كاذبة. يشرح الأمور كما هي ويتابع الملف بجدية. في كل مرة كان عندي سؤال، كنت أجد الجواب.»">« Ce que j'ai apprécié, c'est qu'il ne donne pas de fausses promesses. Il explique les choses telles qu'elles sont et il suit le dossier sérieusement. À chaque fois que j'avais une question, j'avais une réponse. »</p>
+        <p class="attrib" data-fr="Zayd El Hossaini — Droit de la famille" data-ar="زيد الحسيني — قانون الأسرة">Zayd El Hossaini — Droit de la famille</p>
       </div>
       <div class="quote-slide">
-        <p class="q" data-fr="« Un vrai partenaire juridique pour notre entreprise. Conseils pragmatiques et disponibles. »" data-ar="«شريك قانوني حقيقي لشركتنا. نصائح عملية ومتاحة دائماً.»">« Un vrai partenaire juridique pour notre entreprise. Conseils pragmatiques et disponibles. »</p>
-        <p class="attrib" data-fr="Karim T. — Droit des affaires" data-ar="كريم ت. — قانون تجاري">Karim T. — Droit des affaires</p>
+        <p class="q" data-fr="« J'étais un peu perdu au début et je ne savais pas quelles démarches faire. Maître El Hossaini m'a orienté étape par étape et le dossier a été suivi avec sérieux. Merci pour votre disponibilité et votre patience. »" data-ar="«كنت ضائعا بعض الشيء في البداية ولم أكن أعرف ما هي الخطوات الواجب اتباعها. وجهني الأستاذ الحسيني خطوة بخطوة، وتمت متابعة الملف بجدية. شكرا على تجاوبكم وصبركم.»">« J'étais un peu perdu au début et je ne savais pas quelles démarches faire. Maître El Hossaini m'a orienté étape par étape et le dossier a été suivi avec sérieux. Merci pour votre disponibilité et votre patience. »</p>
+        <p class="attrib" data-fr="Mariam El Hossaini — Droit des affaires" data-ar="مريم الحسيني — قانون تجاري">Mariam El Hossaini — Droit des affaires</p>
       </div>
 
       <div class="quote-dots" id="quoteDots">
@@ -1065,7 +1099,7 @@
     <div class="head-center">
       <div class="ornament"><span class="l"></span><span class="dot"></span><span class="r"></span></div>
       <p class="kicker" data-fr="Questions" data-ar="الأسئلة">Questions</p>
-      <h2 data-fr-html='Ce que l&#39;on nous <em class="gold-text">demande souvent</em>' data-ar-html='الأسئلة <em class="gold-text">الأكثر تكراراً</em>'>Ce que l'on nous <em class="gold-text">demande souvent</em></h2>
+      <h2 data-fr-html='Ce que l&#39;on nous <em class="gold-text">demande souvent</em>' data-ar-html='الأسئلة <em class="gold-text">الأكثر تكرارا</em>'>Ce que l'on nous <em class="gold-text">demande souvent</em></h2>
     </div>
 
     <div>
@@ -1075,7 +1109,7 @@
       </details>
       <details class="faq-item">
         <summary><span data-fr="Quels sont vos honoraires ?" data-ar="ما هي أتعابكم؟">Quels sont vos honoraires ?</span> <span class="ind">+</span></summary>
-        <p class="a" data-fr="Ils dépendent de la nature et de la complexité du dossier. Un devis clair vous est toujours communiqué avant toute intervention." data-ar="تختلف حسب طبيعة الملف ومدى تعقيده. ويُقدَّم لكم دائماً عرض أتعاب واضح قبل أي تدخل.">Ils dépendent de la nature et de la complexité du dossier. Un devis clair vous est toujours communiqué avant toute intervention.</p>
+        <p class="a" data-fr="Ils dépendent de la nature et de la complexité du dossier. Un devis clair vous est toujours communiqué avant toute intervention." data-ar="تختلف حسب طبيعة الملف ومدى تعقيده، ونقدم لكم دائما عرض أتعاب واضح قبل أي تدخل.">Ils dépendent de la nature et de la complexité du dossier. Un devis clair vous est toujours communiqué avant toute intervention.</p>
       </details>
       <details class="faq-item">
         <summary><span data-fr="Intervenez-vous en dehors de Tétouan ?" data-ar="هل تتدخلون خارج تطوان؟">Intervenez-vous en dehors de Tétouan ?</span> <span class="ind">+</span></summary>
@@ -1083,7 +1117,7 @@
       </details>
       <details class="faq-item">
         <summary><span data-fr="Combien de temps prend une procédure ?" data-ar="كم من الوقت تستغرق المسطرة؟">Combien de temps prend une procédure ?</span> <span class="ind">+</span></summary>
-        <p class="a" data-fr="Cela varie selon le dossier et la juridiction compétente. Une estimation réaliste vous est donnée dès la première rencontre." data-ar="يختلف الأمر حسب الملف والجهة القضائية المختصة. وتُقدَّم لكم تقديرات واقعية منذ اللقاء الأول.">Cela varie selon le dossier et la juridiction compétente. Une estimation réaliste vous est donnée dès la première rencontre.</p>
+        <p class="a" data-fr="Cela varie selon le dossier et la juridiction compétente. Une estimation réaliste vous est donnée dès la première rencontre." data-ar="يختلف الأمر حسب الملف والجهة القضائية المختصة، ونقدم لكم تقديرات واقعية منذ اللقاء الأول.">Cela varie selon le dossier et la juridiction compétente. Une estimation réaliste vous est donnée dès la première rencontre.</p>
       </details>
     </div>
   </section>
@@ -1094,7 +1128,7 @@
 <section class="rail" style="padding:40px 0 70px; text-align:center;">
   <div class="ornament" style="justify-content:center; margin-bottom:24px;"><span class="l"></span><span class="dot"></span><span class="r"></span></div>
   <p class="serif" style="font-size:26px; color:var(--gold-1);" data-fr="Abdelmajid El Hossaini" data-ar="عبد المجيد الحسيني">Abdelmajid El Hossaini</p>
-  <p class="kicker" style="margin-top:8px;" data-fr="Avocat au Barreau de Tétouan" data-ar="محامٍ بهيئة تطوان">Avocat au Barreau de Tétouan</p>
+  <p class="kicker" style="margin-top:8px;" data-fr="Avocat au Barreau de Tétouan" data-ar="محامي بهيئة تطوان">Avocat au Barreau de Tétouan</p>
 </section>
 
 <!-- CTA -->
@@ -1103,7 +1137,7 @@
     <div class="ornament" style="justify-content:center; margin-bottom:30px;"><span class="l"></span><span class="dot"></span><span class="r"></span></div>
     <h2 data-fr-html='Parlons de <em class="gold-text">votre situation</em>' data-ar-html='لنتحدث عن <em class="gold-text">وضعيتكم</em>'>Parlons de <em class="gold-text">votre situation</em></h2>
     <p data-fr="Premier échange sans engagement, pour comprendre votre dossier et vos options." data-ar="لقاء أول دون التزام، لفهم ملفكم والخيارات المتاحة أمامكم.">Premier échange sans engagement, pour comprendre votre dossier et vos options.</p>
-    <a href="#contact" class="btn-gold" data-fr="Prendre rendez-vous" data-ar="احجز موعداً">Prendre rendez-vous</a>
+    <a href="#contact" class="btn-gold" data-fr="Prendre rendez-vous" data-ar="احجز موعدا">Prendre rendez-vous</a>
   </div>
 </section>
 
@@ -1127,7 +1161,7 @@
           <a class="map-link" href="https://maps.app.goo.gl/bsbMsdtEoA6iY6R97" target="_blank" rel="noopener" data-fr="Voir sur la carte →" data-ar="عرض على الخريطة ↗">Voir sur la carte →</a>
         </span>
       </div>
-      <div class="contact-line"><span data-fr="Horaires" data-ar="ساعات العمل">Horaires</span><span class="hours-placeholder" data-fr="Sur rendez-vous — [horaires à confirmer]" data-ar="حسب الموعد — [سيتم تحديد ساعات العمل لاحقاً]">Sur rendez-vous — [horaires à confirmer]</span></div>
+      <div class="contact-line"><span data-fr="Horaires" data-ar="ساعات العمل">Horaires</span><span class="hours-placeholder" data-fr="Sur rendez-vous — [horaires à confirmer]" data-ar="حسب الموعد — [سيتم تحديد ساعات العمل لاحقا]">Sur rendez-vous — [horaires à confirmer]</span></div>
     </div>
 
     <form class="form-panel" id="contactForm">
@@ -1160,7 +1194,7 @@
       </div>
       <button type="submit" class="btn-gold" style="border:none; cursor:pointer;" data-fr="Envoyer la demande" data-ar="إرسال الطلب">Envoyer la demande</button>
 
-      <p class="privacy-note" data-fr="Les informations transmises via ce formulaire sont confidentielles et utilisées uniquement pour traiter votre demande. Elles ne sont ni partagées ni cédées à des tiers." data-ar="المعلومات المرسلة عبر هذه الاستمارة سرية وتُستخدم فقط لمعالجة طلبكم، ولا تتم مشاركتها أو التنازل عنها لأي طرف ثالث.">
+      <p class="privacy-note" data-fr="Les informations transmises via ce formulaire sont confidentielles et utilisées uniquement pour traiter votre demande. Elles ne sont ni partagées ni cédées à des tiers." data-ar="المعلومات المرسلة عبر هذه الاستمارة سرية وتستخدم فقط لمعالجة طلبكم، ولا تتم مشاركتها أو التنازل عنها لأي طرف ثالث.">
         Les informations transmises via ce formulaire sont confidentielles et utilisées uniquement pour traiter votre demande. Elles ne sont ni partagées ni cédées à des tiers.
       </p>
 
@@ -1169,7 +1203,7 @@
         (aucun backend / service d'envoi connecté). Pour le rendre fonctionnel,
         connectez-le à un service comme Formspree, EmailJS, ou un backend dédié.
       -->
-      <p class="form-status" id="formStatus" data-fr="Merci, votre message a bien été préparé. Ce formulaire n'est pas encore connecté à un service d'envoi — merci de nous contacter directement par téléphone ou WhatsApp en attendant." data-ar="شكراً، تم إعداد رسالتكم بنجاح. هذه الاستمارة غير مرتبطة بعد بخدمة إرسال — يرجى التواصل معنا مباشرة عبر الهاتف أو واتساب في انتظار ذلك.">
+      <p class="form-status" id="formStatus" data-fr="Merci, votre message a bien été préparé. Ce formulaire n'est pas encore connecté à un service d'envoi — merci de nous contacter directement par téléphone ou WhatsApp en attendant." data-ar="شكرا، تم إعداد رسالتكم بنجاح. هذه الاستمارة غير مرتبطة بعد بخدمة إرسال — يرجى التواصل معنا مباشرة عبر الهاتف أو واتساب في انتظار ذلك.">
         Merci, votre message a bien été préparé. Ce formulaire n'est pas encore connecté à un service d'envoi — merci de nous contacter directement par téléphone ou WhatsApp en attendant.
       </p>
     </form>
@@ -1191,7 +1225,7 @@
 </a>
 
 <div class="mobile-cta-bar">
-  <a href="#contact" class="btn-gold" data-fr="Prendre rendez-vous" data-ar="احجز موعداً">Prendre rendez-vous</a>
+  <a href="#contact" class="btn-gold" data-fr="Prendre rendez-vous" data-ar="احجز موعدا">Prendre rendez-vous</a>
 </div>
 
 <script>
@@ -1209,9 +1243,15 @@
 
   const navToggle = document.getElementById('navToggle');
   const mobilePanel = document.getElementById('mobilePanel');
-  navToggle.addEventListener('click', () => mobilePanel.classList.toggle('open'));
+  function toggleMobileMenu(open) {
+    const isOpen = open !== undefined ? open : !mobilePanel.classList.contains('open');
+    mobilePanel.classList.toggle('open', isOpen);
+    navToggle.classList.toggle('active', isOpen);
+    document.body.classList.toggle('menu-open', isOpen);
+  }
+  navToggle.addEventListener('click', () => toggleMobileMenu());
   mobilePanel.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => mobilePanel.classList.remove('open'))
+    a.addEventListener('click', () => toggleMobileMenu(false))
   );
 
   const slides = document.querySelectorAll('.quote-slide');
@@ -1234,8 +1274,8 @@
       description: "Cabinet El Hossaini, avocat à Tétouan. Droit des affaires, droit de la famille, droit immobilier et contentieux."
     },
     ar: {
-      title: 'الحسيني — محامٍ، تطوان',
-      description: 'مكتب الحسيني، محامٍ بتطوان. القانون التجاري، قانون الأسرة، القانون العقاري والمنازعات القضائية.'
+      title: 'الحسيني — محامي، تطوان',
+      description: 'مكتب الحسيني، محامي بتطوان. القانون التجاري، قانون الأسرة، القانون العقاري والمنازعات القضائية.'
     }
   };
 
