@@ -830,6 +830,9 @@
   @media (max-width: 900px) {
     :root { --text-soft: #b7b2a6; }
 
+    html { scroll-padding-top: 100px; }
+    section[id] { scroll-margin-top: 100px; }
+
     section { padding: 60px 0; }
     .head-center { margin-bottom: 34px; }
     .cta-strip { padding: 50px 0; }
@@ -875,7 +878,8 @@
     .quote-dots button { position: relative; }
     .quote-dots button::after { content: ""; position: absolute; inset: -12px; }
 
-    .mobile-cta-bar { padding: 10px 6vw; }
+    .mobile-cta-bar { padding: 10px 6vw; transition: transform .3s ease; }
+    .mobile-cta-bar.cta-hidden { transform: translateY(120%); }
     .mobile-cta-bar .btn-gold { padding: 13px 20px; font-size: 11px; }
     body { padding-bottom: 72px; }
     .whatsapp-float { width: 46px; height: 46px; bottom: 82px; right: 20px; }
@@ -1323,6 +1327,17 @@
   mobilePanel.querySelectorAll('a').forEach(a =>
     a.addEventListener('click', () => toggleMobileMenu(false))
   );
+
+  const mobileCtaBar = document.querySelector('.mobile-cta-bar');
+  if (mobileCtaBar) {
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      const scrollingDown = y > lastScrollY;
+      mobileCtaBar.classList.toggle('cta-hidden', scrollingDown && y > 80);
+      lastScrollY = y;
+    }, { passive: true });
+  }
 
   const slides = document.querySelectorAll('.quote-slide');
   const dots = document.querySelectorAll('#quoteDots button');
