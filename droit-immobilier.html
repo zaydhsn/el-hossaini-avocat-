@@ -827,27 +827,58 @@
   /* ============ MOBILE UX ENHANCEMENTS (mobile only, desktop untouched) ============ */
 
   @media (max-width: 900px) {
-    section { padding: 90px 0; }
-    .head-center { margin-bottom: 50px; }
-    .cta-strip { padding: 70px 0; }
+    :root { --text-soft: #b7b2a6; }
 
-    .hero { min-height: 100svh; align-items: flex-start; }
-    .hero-inner { padding-top: 130px; padding-bottom: 50px; }
-    .hero-stats { margin-top: 50px; gap: 40px; }
+    section { padding: 60px 0; }
+    .head-center { margin-bottom: 34px; }
+    .cta-strip { padding: 50px 0; }
 
-    .hero-buttons { flex-direction: column; width: 100%; gap: 14px; }
+    .hero { min-height: 0; align-items: flex-start; }
+    .hero-inner { padding-top: 120px; padding-bottom: 30px; }
+    .hero-buttons { margin-top: 30px; flex-direction: column; width: 100%; gap: 12px; }
     .hero-buttons .btn-gold,
     .hero-buttons .btn-line { width: 100%; text-align: center; }
+    .hero-stats { margin-top: 34px; gap: 28px; }
+    .hero-stats .num { font-size: 32px; }
 
-    .practice-card { padding: 40px 28px; }
-    .practice-card .roman { margin-bottom: 24px; }
+    .engagement-section { padding: 50px 0 30px !important; }
+    .signature-section { padding: 24px 0 36px !important; }
+    .page-breadcrumb { padding-top: 100px !important; }
+    .page-title-section { padding-top: 20px !important; padding-bottom: 50px !important; }
+
+    .about-grid { gap: 36px; }
+    .about-copy .kicker { margin-bottom: 12px; }
+    .about-copy h2 { margin-bottom: 16px; }
+    .creds { gap: 22px; margin-top: 22px; padding-top: 20px; }
+
+    .practice-card { padding: 26px 24px; }
+    .practice-card .roman { margin-bottom: 12px; }
+    .practice-card h3 { font-size: 21px; margin-bottom: 8px; }
+
+    .why-grid { gap: 30px; }
+    .why-item .roman { margin-bottom: 10px; }
+    .why-item h3 { margin-bottom: 8px; }
+
+    .quote-slide .q { font-size: 20px; line-height: 1.45; }
+    .quote-slide .attrib { margin-top: 18px; }
+
+    .faq-item summary { padding: 20px 0; gap: 16px; }
+    .faq-item .a { padding-bottom: 20px; font-size: 14px; }
+
+    .contact-grid { gap: 40px; }
+    .contact-line { padding: 14px 0; }
+    .contact-line a { display: inline-block; padding: 4px 0; }
 
     .lang-switch button { padding: 9px 12px; }
 
     .quote-dots button { position: relative; }
     .quote-dots button::after { content: ""; position: absolute; inset: -12px; }
 
-    .contact-line a { display: inline-block; padding: 4px 0; }
+    .mobile-cta-bar { padding: 10px 6vw; }
+    .mobile-cta-bar .btn-gold { padding: 13px 20px; font-size: 11px; }
+    body { padding-bottom: 72px; }
+    .whatsapp-float { width: 46px; height: 46px; bottom: 82px; right: 20px; }
+    .whatsapp-float svg { width: 21px; height: 21px; }
   }
 
   @media (max-width: 560px) {
@@ -858,7 +889,7 @@
     header, header.scrolled { padding-left: 6vw; padding-right: 6vw; }
     .logo-img { height: 34px; }
     .lang-switch button { padding: 7px 9px; }
-    .hero h1 { font-size: clamp(38px, 11vw, 48px); }
+    .hero h1 { font-size: clamp(36px, 10.5vw, 46px); }
   }
   /* ============ ARABIC / RTL ADAPTATIONS ============ */
 
@@ -966,11 +997,11 @@
 
 <main>
 
-<section class="rail" style="padding-top:170px; padding-bottom:0;">
+<section class="rail page-breadcrumb" style="padding-top:170px; padding-bottom:0;">
   <p class="kicker"><a href="index.html" style="color:var(--text-dim);" data-fr="Accueil" data-ar="الرئيسية">Accueil</a> / <a href="index.html#domaines" style="color:var(--text-dim);" data-fr="Domaines" data-ar="التخصصات">Domaines</a> / <span data-fr="Droit immobilier" data-ar="القانون العقاري">Droit immobilier</span></p>
 </section>
 
-<section class="rail divider" style="padding-top:40px;">
+<section class="rail divider page-title-section" style="padding-top:40px;">
   <div class="head-center">
     <div class="ornament"><span class="l"></span><span class="dot"></span><span class="r"></span></div>
     <p class="kicker" data-fr="Domaine III" data-ar="التخصص III">Domaine III</p>
